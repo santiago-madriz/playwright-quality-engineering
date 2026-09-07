@@ -2,6 +2,8 @@
 
 [![Quality pipeline](https://github.com/santiago-madriz/playwright-quality-engineering/actions/workflows/quality.yml/badge.svg)](https://github.com/santiago-madriz/playwright-quality-engineering/actions/workflows/quality.yml)
 
+![Playwright Quality Engineering](docs/assets/playwright-quality-engineering.png)
+
 A production-style Playwright and TypeScript quality suite for [santiagomadriz.com](https://santiagomadriz.com). It demonstrates risk-based coverage across the browser UI, accessibility, HTTP contracts, responsive behavior, localization, and lightweight performance budgets.
 
 The target is my public photography portfolio, so the suite can exercise a real product without relying on private employer code or data.
