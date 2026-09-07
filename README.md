@@ -1,116 +1,68 @@
-# Galería Mexicana E2E Test Suite
+# Playwright Quality Engineering
 
-End-to-end test suite for Galería Mexicana's Next.js e-commerce platform built with Playwright.
+[![Quality pipeline](https://github.com/santiago-madriz/playwright-quality-engineering/actions/workflows/quality.yml/badge.svg)](https://github.com/santiago-madriz/playwright-quality-engineering/actions/workflows/quality.yml)
 
-## Features
+A production-style Playwright and TypeScript quality suite for [santiagomadriz.com](https://santiagomadriz.com). It demonstrates risk-based coverage across the browser UI, accessibility, HTTP contracts, responsive behavior, localization, and lightweight performance budgets.
 
-- Complete test coverage for homepage, product pages, and shopping cart
-- Cross-browser support (Chrome, Firefox, Safari, Edge)
-- Mobile device testing and responsive design validation
-- Accessibility compliance testing (WCAG guidelines)
-- Performance monitoring and SEO validation
-- Visual regression testing
+The target is my public photography portfolio, so the suite can exercise a real product without relying on private employer code or data.
 
-## Project Structure
+## Quality signals
 
-```
-e2e-tests/
-├── pages/                   # Page Object Models
-│   ├── HomePage.js          # Homepage interactions
-│   └── TequilaPage.js       # Tequila page interactions
-├── tests/                   # Test files
-│   ├── homepage.test.js     # Homepage functionality tests
-│   ├── tequila.test.js      # Tequila page tests
-│   ├── cart.test.js         # Shopping cart tests
-│   ├── cross-browser-accessibility.test.js  # Cross-browser & accessibility tests
-│   └── performance-seo.test.js              # Performance & SEO tests
-├── utils/                   # Utility functions
-│   └── test-helpers.js      # Common test utilities
-├── test-results/            # Test output and reports
-├── playwright.config.js     # Playwright configuration
-├── global-setup.js         # Global test setup
-├── global-teardown.js      # Global test cleanup
-└── README.md               # This file
-```
+| Layer | What is covered | Gate |
+| --- | --- | --- |
+| Smoke | Availability, metadata, hero content, primary navigation | Every push and pull request |
+| User journeys | Work discovery, language switching, contact-form validation | Every push and pull request |
+| Accessibility | Automated WCAG checks with axe plus semantic assertions | Every push and pull request |
+| HTTP contract | Status, content type, security headers, asset integrity | Every push and pull request |
+| Compatibility | Chromium, Firefox, WebKit, and mobile emulation | Scheduled and manual runs |
+| Performance | Browser navigation timing budget | Scheduled and manual runs |
 
-## Setup and Installation
+## Run it
 
-### Prerequisites
-
-- Node.js 16 or higher
-- Next.js application running on `https://galeriamexicanacr.com/`
-
-### Installation
-
-1. Navigate to the e2e-tests directory:
-```bash
-cd e2e-tests
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Install Playwright browsers:
-```bash
-npx playwright install
-```
-
-### Running Specific Test Suites
+Prerequisites: Node.js 20+.
 
 ```bash
-# Homepage tests only
-npx playwright test homepage.test.js
-
+npm ci
+npx playwright install --with-deps
+npm test
 ```
 
-## Test Categories
+Useful commands:
 
-### 1. Homepage Tests (`homepage.test.js`)
-- Layout and visual elements verification
-- Product grid functionality
-- Shopping cart integration
-- Navigation tests
-- WhatsApp integration
-- SEO and accessibility checks
-- Performance validation
-- Error handling
+```bash
+npm run test:smoke       # Fast release signal
+npm run test:a11y        # Accessibility suite
+npm run test:contract    # HTTP and asset checks
+npm run test:extended    # Full cross-browser suite
+npm run test:ui          # Local Playwright UI
+npm run typecheck        # Static TypeScript validation
+```
 
-### 2. Tequila Page Tests (`tequila.test.js`)
-- Product filtering by category (Blanco, Reposado, Añejo)
-- Product information display
-- Cart integration from product page
-- Responsive design verification
-- SEO elements validation
-- Navigation integration
+Override the target without changing code:
 
-### 3. Shopping Cart Tests (`cart.test.js`)
-- Adding/removing items
-- Quantity management
-- Cart persistence across navigation
-- WhatsApp checkout integration
-- Mobile cart functionality
-- Error handling and edge cases
-- Performance with multiple items
+```bash
+BASE_URL=https://preview.example.com npm run test:smoke
+```
 
-### 4. Cross-Browser & Accessibility Tests (`cross-browser-accessibility.test.js`)
-- Browser-specific feature testing
-- CSS and layout consistency
-- JavaScript compatibility
-- Keyboard navigation
-- Screen reader support
-- ARIA attributes validation
-- Color contrast verification
-- Focus management
+## Design choices
 
-### 5. Performance & SEO Tests (`performance-seo.test.js`)
-- Page load performance
-- Resource loading optimization
-- Runtime performance metrics
-- Meta tags and titles
-- Structured data validation
-- URL structure and navigation
-- Content quality assessment
-- Mobile SEO compliance
+- User-facing roles and labels are preferred over CSS implementation details.
+- The page object contains navigation behavior; assertions remain close to the tests.
+- Retries are limited to CI and always retain a trace on retry.
+- Tests do not submit the live contact form or mutate production data.
+- Performance checks are tagged as extended because network conditions vary.
+- CI keeps HTML reports, traces, screenshots, and videos only when they help diagnose a failure.
 
+See [Test strategy](docs/TEST_STRATEGY.md) for the risk model and [Failure triage](docs/FAILURE_TRIAGE.md) for the operational workflow.
+
+## Skills demonstrated
+
+Playwright, TypeScript, cross-browser testing, responsive testing, accessibility, API testing, test architecture, CI/CD with GitHub Actions, release gates, failure diagnostics, and quality documentation.
+
+## Responsible use
+
+This repository tests a site I own. If you adapt it, only automate systems you are authorized to test and keep load low in shared environments.
+
+## License
+
+[MIT](LICENSE)

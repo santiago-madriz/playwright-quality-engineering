@@ -1,34 +1,34 @@
 {
-  "name": "galeria-mexicana-e2e-tests",
-  "version": "1.0.0",
-  "description": "Advanced Playwright E2E test suite for Galeria Mexicana Next.js application",
-  "main": "index.js",
+  "name": "playwright-quality-engineering",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Risk-based Playwright quality suite for UI, accessibility, API contracts, compatibility, and performance",
+  "type": "module",
   "scripts": {
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
-    "test:debug": "playwright test --debug",
+    "test": "playwright test --project=chromium",
+    "test:smoke": "playwright test --project=chromium --grep @smoke",
+    "test:a11y": "playwright test tests/accessibility",
+    "test:contract": "playwright test tests/contracts --project=chromium",
+    "test:extended": "playwright test",
     "test:ui": "playwright test --ui",
-    "test:chrome": "playwright test --project=chromium",
-    "test:firefox": "playwright test --project=firefox",
-    "test:webkit": "playwright test --project=webkit",
-    "test:mobile": "playwright test --project=mobile-chrome --project=mobile-safari",
-    "test:ci": "playwright test --reporter=html",
+    "test:headed": "playwright test --project=chromium --headed",
     "report": "playwright show-report",
-    "codegen": "playwright codegen http://localhost:3000"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "playwright", 
-    "e2e", 
-    "testing", 
-    "nextjs", 
-    "ecommerce", 
-    "mexican-products"
+    "playwright",
+    "quality-engineering",
+    "e2e-testing",
+    "accessibility",
+    "api-testing",
+    "ci-cd"
   ],
   "author": "Santiago Madriz",
   "license": "MIT",
-  "type": "commonjs",
-  "dependencies": {
-    "@faker-js/faker": "^10.0.0",
-    "@playwright/test": "^1.55.0"
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2"
   }
 }
